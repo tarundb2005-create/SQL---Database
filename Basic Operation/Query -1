@@ -1,0 +1,72 @@
+-- Create Database
+CREATE DATABASE college;
+
+-- Use Database
+USE college;
+
+-- Create Table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    department VARCHAR(50)
+);
+
+-- Insert Records
+INSERT INTO students VALUES
+(1, 'Tarun', 21, 'CSE'),
+(2, 'Rahul', 20, 'ECE'),
+(3, 'Priya', 22, 'IT'),
+(4, 'Anu', 19, 'CSE'),
+(5, 'Vijay', 23, 'MECH');
+
+-- Display All Records
+SELECT * FROM students;
+
+-- Display Specific Columns
+SELECT name, department FROM students;
+
+-- Filter Records
+SELECT * FROM students
+WHERE age > 20;
+
+-- Sort Records
+SELECT * FROM students
+ORDER BY age DESC;
+
+-- Count Records
+SELECT COUNT(*) AS total_students
+FROM students;
+
+-- Update a Record
+UPDATE students
+SET age = 24
+WHERE id = 5;
+
+-- Verify Update
+SELECT * FROM students
+WHERE id = 5;
+
+-- Delete a Record
+DELETE FROM students
+WHERE id = 4;
+
+-- Verify Delete
+SELECT * FROM students;
+
+-- Add New Column
+ALTER TABLE students
+ADD COLUMN email VARCHAR(100);
+
+-- View Table Structure
+DESCRIBE students;
+
+-- Rename Column (MySQL 8+)
+ALTER TABLE students
+RENAME COLUMN department TO dept;
+
+-- View Updated Structure
+DESCRIBE students;
+
+-- Drop Table
+DROP TABLE students;
