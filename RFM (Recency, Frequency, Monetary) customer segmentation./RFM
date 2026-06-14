@@ -1,0 +1,30 @@
+-- Step 1: Aggregate foundational metrics per customer
+WITH customer_metrics AS (
+    SELECT 
+        customer_id,
+        DATEDIFF('2026-06-14', MAX(purchase_date)) AS recency,
+        COUNT(order_id) AS frequency,
+        SUM(total_amount) AS monetary
+    FROM sales_transactions
+    GROUP BY customer_id
+),
+-- Step 2: Convert raw metrics into statistical NTILE quartiles
+rfm_scores AS (
+    SELECT *,
+        NTILE(4) OVER (ORDER BY recency DESC) AS r_score,
+        NTILE(4) OVER (ORDER BY frequency ASC) AS f_score,
+        NTILE(4) OVER (ORDER BY monetary ASC) AS m_score
+    FROM customer_metrics
+)
+-- Step 3: Classify users into high-value data science segments
+SELECT 
+    customer_id,
+    recency, frequency, monetary,
+    CASE 
+        WHEN r_score = 4 AND f_score = 4 AND m_score = 4 THEN 'Champions'
+        WHEN f_score = 4 AND m_score = 4 THEN 'Loyal Customers'
+        WHEN r_score = 1 THEN 'At Risk / Churning'
+        ELSE 'Standard'
+    END AS customer_segment
+FROM rfm_scores
+ORDER BY monetary DESC;
