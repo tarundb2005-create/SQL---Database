@@ -10,4 +10,7 @@ value(6,"mark","lenin",1.20,"2026-01-01");
 insert employees
 value(6,"mark","lenin",11.20,"2026-01-01");
 
-select * from employees; 
+alter table employees
+drop check chck_hourly_pay;
+
+select * from employees;  
