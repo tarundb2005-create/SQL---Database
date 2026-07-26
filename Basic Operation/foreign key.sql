@@ -11,3 +11,9 @@ insert customers(customer_id , first_name , last_name)
 values(2,"john" , "jacob");
 select * from transactions;
 select * from customers;
+
+---alter for later update
+ALTER TABLE transactions
+ADD CONSTRAINT fk_customer
+FOREIGN KEY (customer_id)
+REFERENCES customers(customer_id);
